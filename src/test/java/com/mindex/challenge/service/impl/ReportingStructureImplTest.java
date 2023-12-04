@@ -6,8 +6,6 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,8 +34,10 @@ public class ReportingStructureImplTest {
 
     @Before
     public void setup(){
+        // Set up consistent endpoint for testing
         reportingUrl = "http://localhost:" + port + "/reporting/{id}";
 
+        // Set up an array of tests for each member in test data
         emplpoyeeTests = new Hashtable<>();
         emplpoyeeTests.put("16a596ae-edd3-4847-99fe-c4518e82c86f", 4);
         emplpoyeeTests.put("b7839309-3348-463b-a7e3-5de1c168beb3", 0);
@@ -47,18 +47,27 @@ public class ReportingStructureImplTest {
     }
 
     @Test
+    /**
+     * Test for when nothing is passed in as a parameter
+     */
     public void testNullCall(){
         HttpStatus actual = restTemplate.getForEntity(reportingUrl, Exception.class, "").getStatusCode();
         assertErrorResponse(HttpStatus.NOT_FOUND, actual);
     }
 
     @Test
+    /**
+     * Test for when nothing is 
+     */
     public void testInvalidId(){
         HttpStatus actual = restTemplate.getForEntity(reportingUrl, Exception.class, "intentional-failure").getStatusCode();
         assertErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, actual);
     }
 
     @Test
+    /**
+     * Iteratively test valid reports from test dictionary
+     */
     public void testValidReports(){
         ReportingStructure result;
 
