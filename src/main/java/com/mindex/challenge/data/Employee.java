@@ -60,4 +60,24 @@ public class Employee {
     public void setDirectReports(List<Employee> directReports) {
         this.directReports = directReports;
     }
+
+    @Override
+    public boolean equals(Object test){
+        // Checks to see if they are the same instantiated object.
+        if(test == this) return true;
+
+        // Checks to see if the tested object is the same class.
+        if(!(test instanceof Employee)) return false;
+
+        // Type cast tested object.
+        Employee testEmployee = (Employee) test;
+
+        // Test to see if contents of both objects are identical.
+        return 
+            this.firstName.equals(testEmployee.getFirstName()) &&
+            this.lastName.equals(testEmployee.getLastName()) &&
+            this.department.equals(testEmployee.getDepartment()) &&
+            this.position.equals(testEmployee.getPosition())
+        ;
+    }
 }
